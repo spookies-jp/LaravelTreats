@@ -39,7 +39,7 @@ trait HasCompositePrimaryKey
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function setKeysForSaveQuery(Builder $query)
+    protected function setKeysForSaveQuery($query)
     {
         foreach ($this->getKeyName() as $key) {
             if (isset($this->$key))
@@ -60,7 +60,7 @@ trait HasCompositePrimaryKey
      */
     public static function find($ids, $columns = ['*'])
     {
-        $me = new self;
+        $me = new static;
         $query = $me->newQuery();
 
         foreach ($me->getKeyName() as $key) {
@@ -81,7 +81,7 @@ trait HasCompositePrimaryKey
      */
     public static function findOrFail($ids, $columns = ['*'])
     {
-        $result = self::find($ids, $columns);
+        $result = static::find($ids, $columns);
 
         if (!is_null($result)) {
             return $result;
